@@ -17,7 +17,7 @@ export default class Login extends React.Component{
             userEmail:'',
             userPassword:''
         }
-        //this.props.navigation.navigate("MenuPrincipal");
+        this.props.navigation.navigate("MenuPrincipal");
     }
 
     login = () =>{
@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
             width: "40%"
     },
     image2: {
+        flex:1,
         marginTop:-90,
         resizeMode: "contain",
             height: "30%",

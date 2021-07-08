@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Pro2",
-    "slug": "Pro2",
+    "name": "CarreraCucei",
+    "slug": "CarreraCucei",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,6 +21,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.android.carreracuei"
     }
   }
 }

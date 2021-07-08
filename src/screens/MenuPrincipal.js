@@ -5,40 +5,85 @@ import {
     StyleSheet,
     View,
     Image,
+    ImageBackground,
+    
   } from 'react-native';
 
+ 
+
 export default class Login extends React.Component{
+  constructor(props){
+    super(props)
+    this.state={ primeroUser:'PrimerUser', 
+    segundoUser:'SegundoUser', 
+    tercerUser:'TercerUser',
+    imagen1: 'https://carreracucei2021.000webhostapp.com/carreraApp/images/logo2.png',
+    imagen2: 'https://carreracucei2021.000webhostapp.com/carreraApp/images/logo2.png',
+    imagen3: 'https://carreracucei2021.000webhostapp.com/carreraApp/images/logo2.png',   
+    usuarios: [],
+    }
+    this.getDatos();
+    this.props.navigation.navigate("MenuPrincipal");
+}
+getDatos = () =>{
+  fetch('https://carreracucei2021.000webhostapp.com/carreraApp/v1/getCarrera.php',{
+    method:'POST',
+    headers:{
+      'Accept':'application/json',
+      'Content-type':'application/json'
+    },
+    body:JSON.stringify({
+    })	
+  }).then((response) => response.json())
+   .then((responseJson)=>{
+      const usuarios = responseJson;
+      this.setState({primeroUser: usuarios[0].Nombre});
+      this.setState({segundoUser: usuarios[1].Nombre});
+      this.setState({tercerUser: usuarios[2].Nombre});
+      this.setState({imagen1: usuarios[0].imagen});
+      this.setState({imagen2: usuarios[1].imagen});
+      this.setState({imagen3: usuarios[2].imagen});
+   })
+   .catch((error)=>{
+   console.error(error);
+   });
+}
     
     render(){
         const {navigate} = this.props.navigation
         return(
-            <View style={{backgroundColor:"#AD1B1B",height:"100%"}}>
-                <Image source ={require('../images/logo2.png')}
-                    style={styles.image}
+            <View >
+                <ImageBackground source={require('../images/background3.png')} style={styles.imageBackground}>
+                <View style={styles.container3}>
+                <Image source ={require('../images/CUCEI.png')}
+                    style={styles.image2}
                 />
+                <Image source ={require('../images/lineas.png')}
+                    style={styles.image3}
+                />
+            </View>
                 <Text
                     style={styles.texto1}
                     >Ranking</Text>
                     <View style={styles.container2}>
-                        <Image source={require('../images/logo2.png')} style={styles.photo} />
-                        <Text style={styles.text2}>Primer lugar</Text>
-                        <Text style={styles.text2}>1</Text>
+                        <Text style={styles.texto2}>1</Text>
+                        <Image source={{uri: this.state.imagen1,}} style={styles.photo} />
+                        <Text style={styles.text2}>{this.state.primeroUser}</Text>
             </View>
             <View style={styles.container2}>
-                        <Image source={require('../images/logo2.png')} style={styles.photo} />
-                        <Text style={styles.text2}>Segundo lugar</Text>
-                        <Text style={styles.text2}>2</Text>
+                        <Text style={styles.texto2}>2</Text>
+                        <Image source={{uri: this.state.imagen2,}} style={styles.photo} />
+                        <Text style={styles.text2}>{this.state.segundoUser}</Text>
             </View>
             <View style={styles.container2}>
-                        <Image source={require('../images/logo2.png')} style={styles.photo} />
-                        <Text style={styles.text2}>Tercer lugar</Text>
-                        <Text style={styles.text2}>3</Text>
+                        <Text style={styles.texto2}>3</Text>
+                        <Image source={{uri: this.state.imagen3,}} style={styles.photo} />
+                        <Text style={styles.text2}>{this.state.tercerUser}</Text>
             </View>
-            <View style={styles.container2}>
-                        <Image source={require('../images/logo2.png')} style={styles.photo} />
-                        <Text style={styles.text2}>Que pasa si pongo muchas cosas</Text>
-                        <Text style={styles.text2}>...</Text>
-            </View>
+            <Image source ={require('../images/logo2.png')}
+                    style={styles.image}
+                />
+            </ImageBackground>
             </View>
             
         )
@@ -50,10 +95,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
     image: {
+      marginBottom:20,
         alignSelf:"center",
         resizeMode: "contain",
-            height: "30%",
-            width: "30%"
+            height: "50%",
+            width: "50%"
     },
     texto1: {
         alignItems:"center",
@@ -64,14 +110,26 @@ const styles = StyleSheet.create({
         paddingVertical:30,
         color:"white",
     },
+    texto2: {
+      position: 'absolute',
+      marginLeft: 10,
+      left: 0,
+      fontSize: 50,
+      fontWeight: "bold",
+      color:"white",
+  },
     container2: {
-        flex: 1,
+        flex: 2,
+        marginBottom: -50,
         padding: 11,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: "white",
-        borderWidth: 3
+      },
+      container3: {
+        marginTop:30,
+        flex: 1,
+        flexDirection: 'row',
       },
       text: {
         marginHorizontal:55,
@@ -81,16 +139,40 @@ const styles = StyleSheet.create({
         borderColor: "white",
       },
       text2: {
+        position: 'absolute',
+        marginLeft: 10,
+        left: 120,
         marginHorizontal:55,
-        fontSize: 10,
+        fontSize: 13,
         alignSelf:"center",
         fontWeight: "bold",
         color:"white",
       },
+      imageBackground: {
+        resizeMode: "cover",
+        justifyContent: "center",
+        height:"100%"
+      },
       photo: {
+        position: 'absolute',
+        marginLeft: 10,
+        left: 50,
         marginHorizontal:20,
-        height: 73,
-        width: 73,
+        height: 50,
+        width: 50,
         borderRadius: 20 
       },
+      image2: {
+        marginHorizontal:-150,
+        resizeMode: "contain",
+            height: "100%",
+            width: "100%"
+    },
+    image3: {
+      marginTop: 10,
+      marginLeft: 140,
+      resizeMode: "contain",
+          height: "60%",
+          width: "60%"
+  },
   });
