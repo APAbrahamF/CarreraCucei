@@ -1,12 +1,12 @@
 import React from 'react';
 import {Keyboard, Text, TextInput} from 'react-native';
-import Icon from '@expo/vector-icons/AntDesign';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import {
-    StyleSheet,
-    View,
-    Image,
-    ImageBackground,
-    
+  View,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity
   } from 'react-native';
 
  
@@ -48,19 +48,23 @@ getDatos = () =>{
    console.error(error);
    });
 }
+login = () =>{
+  this.props.navigation.openDrawer();
+  //alert("Successfully Login");
+}
     
     render(){
         const {navigate} = this.props.navigation
         return(
-            <View >
+          <View >
                 <ImageBackground source={require('../images/background3.png')} style={styles.imageBackground}>
                 <View style={styles.container3}>
                 <Image source ={require('../images/CUCEI.png')}
                     style={styles.image2}
                 />
-                <Image source ={require('../images/lineas.png')}
-                    style={styles.image3}
-                />
+                <TouchableOpacity style={styles.image3} onPress={this.login}>
+                <Icon name="view-headline" color="#FFFFFF" size={40}/>
+                </TouchableOpacity>
             </View>
                 <Text
                     style={styles.texto1}
@@ -169,8 +173,8 @@ const styles = StyleSheet.create({
             width: "100%"
     },
     image3: {
-      marginTop: 10,
-      marginLeft: 140,
+      position: 'absolute',
+        right: -200,
       resizeMode: "contain",
           height: "60%",
           width: "60%"
